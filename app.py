@@ -104,6 +104,17 @@ Weiter unten: **🔬 Wie oft finden die Verfahren die Vier?**, **🔬 Wann brauc
 """
 )
 
+# erklaerseite:einfach:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/planare-faerbung-erklaert.json, nicht von Hand ändern)
+with st.expander("💬 In einfachen Worten"):
+    st.markdown(
+        """
+Eine Karte soll so angemalt werden, dass angrenzende Gebiete verschiedene Farben haben. Nach dem **Vierfarbensatz** genügen auf einer flachen Karte vier Farben, doch der Satz verrät nicht, wie man sie findet. Die Demo färbt Zufallskarten mit vier Verfahren: **Greedy** malt der Reihe nach, **DSATUR** nimmt jeweils das engste Gebiet zuerst, das **Heawood-Verfahren** kommt mit höchstens fünf Farben aus und tauscht bei Bedarf eine **Kette** aus zwei Farben, und die **Kempe-Reduktion** versucht danach, die fünfte Farbe wegzutauschen. Eine exakte Prüfung antwortet, ob vier Farben möglich sind, oder meldet „unentschieden“. Die Messreihen zeigen, wo die einfachen Verfahren die Vier verfehlen und was die Ketten zurückholen.
+
+[Ausführlich und verständlich erklärt, mit Fachteil](https://sebastianhanisch.net/planare-faerbung-erklaert.html)
+        """
+    )
+# erklaerseite:einfach:end
+
 with st.expander("So funktionieren die Verfahren", expanded=True):
     st.markdown(
         """
@@ -238,7 +249,7 @@ st.markdown("---")
 # --- Experiment 4 --------------------------------------------------------------------------------------------------------------------------
 
 st.subheader("🔬 Lehrbuch-Graphen")
-st.caption("Kleine Graphen mit ihrer kleinsten Farbenzahl (exakt bestimmt) und den Farben der Verfahren. Der Vierfarbensatz gilt nur für planare Graphen: K5 braucht fünf.")
+st.caption("Kleine Graphen mit ihrer kleinsten Farbenzahl (exakt bestimmt) und den Farben der Verfahren. Der Vierfarbensatz garantiert vier Farben nur für planare Graphen: K5 braucht fünf.")
 hand = st.selectbox("Graph", C.HAND_GRAPHS, index=C.HAND_GRAPHS.index(C.DEFAULT_HAND), key="hand_select")
 hand_rows = _hand_rows()
 st.dataframe(
@@ -272,6 +283,22 @@ st.markdown(
 st.markdown("---")
 
 with st.expander("📐 Mathematische Formulierung"):
+    # erklaerseite:lesehilfe:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/planare-faerbung-erklaert.json, nicht von Hand ändern)
+    st.markdown(
+        r"""
+**Lesehilfe.** Gegeben ist ein planarer Graph $G=(V,E)$, gesucht eine Färbung der Knoten, bei der benachbarte Knoten verschiedene Farben tragen, mit möglichst wenigen Farben.
+
+| Symbol | Bedeutung |
+|---|---|
+| $G=(V,E)$ | Graph mit den Knoten (Gebieten) und den Kanten (gemeinsamen Grenzen) |
+| $n$, $m$ | Zahl der Knoten bzw. der Kanten |
+| $\chi(G)$ | kleinste Farbenzahl, mit der eine zulässige Färbung gelingt |
+| $d(v)$ | Grad von $v$, also die Zahl seiner Nachbarn |
+
+[Schritt für Schritt erklärt, mit Herleitung und Literatur](https://sebastianhanisch.net/planare-faerbung-erklaert.html#fachleute)
+        """
+    )
+    # erklaerseite:lesehilfe:end
     st.markdown(
         r"""
 **Gegeben** ein einfacher ungerichteter planarer Graph $G=(V,E)$; **gesucht** eine Färbung $c: V \to \{0,1,\dots\}$ mit $c(u)\ne c(v)$ für jede Kante $uv\in E$ und möglichst wenigen Farben.
@@ -283,7 +310,7 @@ with st.expander("📐 Mathematische Formulierung"):
 | Kempe-Kette | Zusammenhangskomponente des Teilgraphen der Knoten mit den Farben $a$ oder $b$ |
 | Smallest-Last-Ordnung | Reihenfolge $v_1,\dots,v_n$, in der $v_i$ ein Knoten kleinsten Grades in $G-\{v_1,\dots,v_{i-1}\}$ ist |
 
-**Vierfarbensatz.** Jeder planare Graph ist 4-färbbar: $\chi(G)\le 4$. Die Aussage gilt nur für planare Graphen: $\chi(K_5)=5$.
+**Vierfarbensatz.** Jeder planare Graph ist 4-färbbar: $\chi(G)\le 4$. Garantiert ist das nur für planare Graphen: $\chi(K_5)=5$ (viele nichtplanare Graphen kommen dennoch mit 4 oder weniger Farben aus).
 
 **Fünffarbensatz (Heawood 1890).** Ein planarer Graph hat einen Knoten vom Grad höchstens 5 (aus $m\le 3n-6$). Entfernt man ihn, färbt den Rest rekursiv und setzt ihn wieder ein, sind seine höchstens fünf Nachbarn mit höchstens fünf Farben gefärbt. Sind es fünf verschiedene, seien $v_1,\dots,v_5$ die Nachbarn im Umlauf mit den Farben $1,\dots,5$. Verbindet die Kette der Farben 1 und 3 ab $v_1$ nicht $v_1$ mit $v_3$, tauscht man sie, und Farbe 1 wird frei. Sonst trennt diese Kette (mit $v$) $v_2$ von $v_4$ und $v_5$, und die Kette der Farben 2 und 4 ab $v_2$ erreicht $v_4$ nicht: tauschen, Farbe 2 wird frei. Also $\chi(G)\le 5$.
 
